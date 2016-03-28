@@ -97,4 +97,4 @@ each script in scripts
 
 ## License
 
-[MIT](https://github.com/expressjs/express/blob/master/LICENSE)
+[MIT](https://github.com/nathanfrancy/express-includes/blob/master/LICENSE)
