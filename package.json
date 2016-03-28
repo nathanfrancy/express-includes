@@ -1,7 +1,7 @@
 {
   "name": "express-includes",
   "version": "0.0.1",
-  "description": "Express middleware for including stylesheets and javascript",
+  "description": "Express middleware for easily including stylesheets and javascript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
