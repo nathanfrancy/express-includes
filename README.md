@@ -1,6 +1,6 @@
 # express-includes
 
-Express middleware for easily including stylesheets and javascript into your views. The idea is setting up configurations for global, section and page level stylesheets and javascript. Start by installing (`--save` to keep the dependency in your `package.json`):
+Express middleware for easily including stylesheets and javascript into your views. The idea is setting up configurations for global, section and page level stylesheets and javascript.
 
 ## Installation
 
@@ -15,7 +15,7 @@ Here's a sample of how to get this working. You can define global styles like th
 
 ```javascript
 var globalStylesheets = [
-    "style.js"
+    "style.css"
 ];
 
 var globalScripts = [
