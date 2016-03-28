@@ -1,12 +1,6 @@
 # express-includes
 
-Express middleware for easily including stylesheets and javascript into your views. 
-
-[![NPM Version][npm-image]][npm-url]
-
-[![NPM Downloads][downloads-image]][downloads-url]
-
-The idea is setting up configurations for global, section and page level stylesheets and javascript. Start by installing (`--save` to keep the dependency in your `package.json`):
+Express middleware for easily including stylesheets and javascript into your views. The idea is setting up configurations for global, section and page level stylesheets and javascript. Start by installing (`--save` to keep the dependency in your `package.json`):
 
 ## Installation
 
