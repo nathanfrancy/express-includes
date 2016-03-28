@@ -1,3 +1,11 @@
+var globalStylesheets = [
+    "style.js"
+];
+
+var globalScripts = [
+    "script.js"
+];
+
 var pageDefinition = [
     {
         url: "/",
@@ -20,8 +28,8 @@ var sectionDefinition = [
 ];
 
 var ImportMiddleware = require('./../index')({
-    globalStylesheets: ["style.js"],
-    globalScripts: ["script.js"],
+    globalStylesheets: globalStylesheets,
+    globalScripts: globalScripts,
     sections: sectionDefinition,
     pages: pageDefinition
 });
