@@ -60,6 +60,11 @@ var ImportMiddleware = function(options) {
         return null;
     };
 
+    /**
+     * Gets imports for the passed in url.
+     * @param url
+     * @returns {{styles: globalStylesheets, scripts: globalScripts, pageConfig: *, sectionConfig: *}}
+     */
     self.getImportsForPage = function(url) {
         var styles = self.globalStylesheets;
         var scripts = self.globalScripts;
