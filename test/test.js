@@ -10,7 +10,10 @@ var pageDefinition = [
     {
         url: "/",
         styles: [ "page.css" ],
-        scripts: [ "script.js" ]
+        scripts: [ "script.js" ],
+        extras: {
+            stuff: "yep"
+        }
     },
     {
         url: "/section/page",
@@ -27,11 +30,16 @@ var sectionDefinition = [
     }
 ];
 
+var extras = {
+    menu: []
+};
+
 var ImportMiddleware = require('./../index')({
     globalStylesheets: globalStylesheets,
     globalScripts: globalScripts,
     sections: sectionDefinition,
-    pages: pageDefinition
+    pages: pageDefinition,
+    extras: extras
 });
 
-console.log(ImportMiddleware.getImportsForPage("/section/page"));
+console.log(ImportMiddleware.getImportsForPage("/"));

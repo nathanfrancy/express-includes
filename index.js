@@ -66,6 +66,7 @@ var ImportMiddleware = function(options) {
      * @returns {{styles: globalStylesheets, scripts: globalScripts, pageConfig: *, sectionConfig: *}}
      */
     self.getImportsForPage = function(url) {
+        var extras = self.extras;
         var styles = self.globalStylesheets;
         var scripts = self.globalScripts;
         var pageConfig = self.getPageConfig(url);
@@ -85,7 +86,8 @@ var ImportMiddleware = function(options) {
             styles: styles,
             scripts: scripts,
             pageConfig: pageConfig,
-            sectionConfig: sectionConfig
+            sectionConfig: sectionConfig,
+            extras: extras
         };
     };
 
@@ -112,6 +114,9 @@ var ImportMiddleware = function(options) {
 
     // Import page definition
     self.pages = self.import(options.pages);
+
+    // Import anything else that needs to be put into the view
+    self.extras = (options.extras || {});
 
     return self;
 };
