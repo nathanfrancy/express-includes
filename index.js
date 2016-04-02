@@ -98,11 +98,14 @@ var ImportMiddleware = function(options) {
      * @param next
      */
     self.importMiddleware = function(req, res, next) {
-        var imports = self.getImportsForPage(req.originalUrl);
-        res.locals.originalUrl = req.originalUrl;
-        res.locals.styles = imports.styles;
-        res.locals.scripts = imports.scripts;
-        res.locals.extras = imports.pageConfig.extras || {};
+        if (req.method.toLowerCase() === "get") {
+            var imports = self.getImportsForPage(req.originalUrl);
+            res.locals.originalUrl = req.originalUrl;
+            res.locals.styles = imports.styles;
+            res.locals.scripts = imports.scripts;
+            res.locals.sectionConfig = imports.sectionConfig || {};
+            res.locals.pageConfig = imports.pageConfig || {};
+        }
         next();
     };
 
