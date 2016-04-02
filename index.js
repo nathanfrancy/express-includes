@@ -102,6 +102,7 @@ var ImportMiddleware = function(options) {
         res.locals.originalUrl = req.originalUrl;
         res.locals.styles = imports.styles;
         res.locals.scripts = imports.scripts;
+        res.locals.extras = imports.pageConfig.extras || {};
         next();
     };
 
