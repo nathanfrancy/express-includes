@@ -37,10 +37,16 @@ var ImportMiddleware = function(options) {
             var itPageParts = self.pages[i].url.split("/");
 
             if (urlParts.length === itPageParts.length) {
+                var match = true;
+
                 for (var j = 0; j < itPageParts.length; j++) {
-                    if (itPageParts[j] !== ":" || itPageParts[j] !== urlParts[j]) break;
+                    if (itPageParts[j] === ":") continue;
+                    if (itPageParts[j] !== urlParts[j]) match = false;
                 }
-                return self.pages[i];
+
+                if (match) {
+                    return self.pages[i];
+                }
             }
         }
         return null;
