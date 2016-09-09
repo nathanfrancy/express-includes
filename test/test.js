@@ -213,3 +213,44 @@ describe('mwFn', function() {
   });
 
 });
+
+describe('invalid data', function() {
+
+  it('should return null configs and empty scripts and styles array', function() {
+    var _includesEmpty = new ImportMiddleware();
+    var i = _includesEmpty.getImports('/test-page');
+
+    expect(i).to.not.equal(null);
+    expect(i).to.not.equal(undefined);
+    expect(i.scripts).to.be.an('array');
+    expect(i.styles).to.be.an('array');
+    expect(i.scripts.length).to.equal(0);
+    expect(i.styles.length).to.equal(0);
+    expect(i.pageConfig).to.equal(null);
+    expect(i.sectionConfig).to.equal(null);
+  });
+
+  it('should not return styles if not an array', function() {
+    var _includes = new ImportMiddleware({
+      pageDefinition: [
+        {
+          url: '/about/team',
+          styles: { 'page': 'thing' }
+        }
+      ],
+      sectionDefinition: [
+          {
+            url: '/about',
+            scripts: "script.js"
+          }
+      ]
+    });
+    var i = _includes.getImports('/about/team');
+
+    expect(i.scripts).to.be.an('array');
+    expect(i.scripts.length).to.equal(0);
+    expect(i.styles).to.be.an('array');
+    expect(i.styles.length).to.equal(0);
+  });
+
+});
