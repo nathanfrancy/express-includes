@@ -1,6 +1,12 @@
 # express-includes
 
-Express middleware for easily including stylesheets and javascript into your views. The idea is setting up configurations for global, section and page level stylesheets and javascript.
+[![Build Status](https://travis-ci.org/nathanfrancy/express-includes.svg?branch=master)](https://travis-ci.org/nathanfrancy/express-includes)
+[![Coverage Status](https://coveralls.io/repos/github/nathanfrancy/express-includes/badge.svg?branch=master)](https://coveralls.io/github/nathanfrancy/express-includes?branch=master)
+
+Express includes is a module for easily including stylesheets and javascript into your views. The idea is setting up configurations for these three levels:
+- global: all pages
+- section: matching a substring of the url
+- page: matching a specific page url
 
 ## Installation
 
@@ -10,11 +16,11 @@ npm install express-includes --save
 
 ## Configuration
 
-Here's a sample of how to get this working. You can define global styles like this: 
+Here's a sample of how to get this working. You can define global styles like this:
 
 
 ```javascript
-var globalStylesheets = [
+var globalStyles = [
     "style.css"
 ];
 
@@ -40,7 +46,7 @@ var sectionDefinition = [
 ];
 ```
 
-And specific page definitions, which match exactly with the URL. You can also match with a page that has a parameter with a semicolon (`:`).
+And specific page definitions, which match exactly with the URL. You can also match with a page that has a wildcard (ex. an ID value) with a semicolon (`:`).
 
 ```javascript
 var pageDefinition = [
@@ -62,26 +68,27 @@ var pageDefinition = [
 ];
 ```
 
-After everything is defined, create a new ImportMiddleware instance by requiring the library where you're initializing express:
+After everything is defined, create a new `ExpressIncludes` instance by requiring the library where you're initializing express:
 
 ```javascript
-var ImportMiddleware = require('express-includes')({
+var ExpressIncludes = require('express-includes');
+
+var includes = new ExpressIncludes({
     globalStylesheets: globalStylesheets,
     globalScripts: globalScripts,
-    sections: sectionDefinition,
-    pages: pageDefinition
+    sectionDefinition: sectionDefinition,
+    pageDefinition: pageDefinition
 });
 ```
 
-Then use the middleware function provided in your express configuration.
+Then use the middleware function provided in your express configuration, which will attach the `scripts` and the `styles` to the express `res.locals` object, giving you easy access to it in your view (or other middlewares).
 
 ```javascript
-app.use(ImportMiddleware.importMiddleware);
+app.use(includes.mwFn);
 ```
 
 ### Using in your view
-
-This is basically running each page request through this middleware function, and attempting to find imports that are relevant to the current page url. If configured correctly, you should be able to do something like this (example in jade) in your view:
+Example using jade.
 
 ```jade
 each style in styles

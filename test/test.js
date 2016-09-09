@@ -9,8 +9,8 @@ var ImportMiddleware = require('./../lib/index');
 var _imports = new ImportMiddleware({
     globalStyles: config.globalStyles,
     globalScripts: config.globalScripts,
-    sections: config.sectionDefinition,
-    pages: config.pageDefinition
+    sectionDefinition: config.sectionDefinition,
+    pageDefinition: config.pageDefinition
 });
 
 describe('getImports', function() {
@@ -49,6 +49,13 @@ describe('getImports', function() {
         expect(styles.indexOf('responsive.css')).to.not.equal(-1);
       });
 
+      it('should return global styles - section match', function() {
+        var styles = _imports.getImports('/about/team').styles;
+
+        expect(styles.indexOf('style.css')).to.not.equal(-1);
+        expect(styles.indexOf('responsive.css')).to.not.equal(-1);
+      });
+
     });
 
     describe('scripts', function() {
@@ -60,8 +67,108 @@ describe('getImports', function() {
         expect(scripts.indexOf('jquery.js')).to.not.equal(-1);
       });
 
+      it('should return global styles - section match', function() {
+        var scripts = _imports.getImports('/about/team').scripts;
+
+        expect(scripts.indexOf('script.js')).to.not.equal(-1);
+        expect(scripts.indexOf('jquery.js')).to.not.equal(-1);
+      });
+
     });
 
+  });
+
+});
+
+describe('getSectionConfig', function() {
+
+  describe('invalid url', function() {
+
+    it('should return null if passed undefined', function() {
+      var section = _imports.getSectionConfig(undefined);
+      expect(section).to.equal(null);
+    });
+
+    it('should return null if passed null', function() {
+      var section = _imports.getSectionConfig(null);
+      expect(section).to.equal(null);
+    });
+
+    it('should return null if passed non-matched url', function() {
+      var section = _imports.getSectionConfig('/thing-that-does-not-match');
+      expect(section).to.equal(null);
+    });
+
+  });
+
+  describe('valid url', function() {
+
+    it('should return a config', function() {
+      var section = _imports.getSectionConfig('/about/team');
+
+      expect(section).to.not.equal(null);
+      expect(section).to.be.an('object');
+      expect(section.url).to.not.equal(undefined);
+      expect(section.styles).to.not.equal(undefined);
+      expect(section.scripts).to.not.equal(undefined);
+    });
+
+    it('should return the section styles and scripts', function() {
+      var section = _imports.getSectionConfig('/about/team');
+      expect(section.url).to.equal('/about');
+      expect(section.scripts.indexOf('about.js')).to.not.equal(-1);
+      expect(section.styles.indexOf('about.css')).to.not.equal(-1);
+    });
+
+  });
+
+});
+
+describe('mwFn', function() {
+
+  it('should always call next', function(done) {
+    var req = { url: '/about' };
+    var res = { locals: {} };
+
+    _imports.mwFn(req, res,
+      // 'next' function
+      function() {
+        done();
+      });
+  });
+
+  it('should have scripts & styles as arrays in res.locals', function(done) {
+    var req = { url: '/about' };
+    var res = { locals: {} };
+
+    _imports.mwFn(req, res,
+      // 'next' function
+      function() {
+        expect(res.locals.scripts).to.not.equal(null);
+        expect(res.locals.scripts).to.not.equal(undefined);
+        expect(res.locals.scripts).to.be.an('array');
+        expect(res.locals.styles).to.not.equal(null);
+        expect(res.locals.styles).to.not.equal(undefined);
+        expect(res.locals.styles).to.be.an('array');
+        done();
+      });
+  });
+
+  it('should have scripts and styles in \'res\' object', function(done) {
+    var req = { url: '/about' };
+    var res = { locals: {} };
+
+    _imports.mwFn(req, res,
+      // 'next' function
+      function() {
+        expect(res.locals.scripts.indexOf('script.js')).to.not.equal(-1);
+        expect(res.locals.scripts.indexOf('scripts.js')).to.equal(-1);
+        expect(res.locals.scripts.indexOf('jquery.js')).to.not.equal(-1);
+        expect(res.locals.styles.indexOf('style.css')).to.not.equal(-1);
+        expect(res.locals.styles.indexOf('styles.css')).to.equal(-1);
+        expect(res.locals.styles.indexOf('responsive.css')).to.not.equal(-1);
+        done();
+      });
   });
 
 });
