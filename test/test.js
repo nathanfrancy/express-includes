@@ -1,45 +1,20 @@
-var globalStylesheets = [
-    "style.js"
-];
+var should = require('chai').should();
 
-var globalScripts = [
-    "script.js"
-];
+var config = require('./config');
+var ImportMiddleware = require('./../index');
 
-var pageDefinition = [
-    {
-        url: "/",
-        styles: [ "page.css" ],
-        scripts: [ "script.js" ],
-        extras: {
-            stuff: "yep"
-        }
-    },
-    {
-        url: "/section/page",
-        styles: [ "param.css" ],
-        scripts: [ "param.js" ]
-    }
-];
-
-var sectionDefinition = [
-    {
-        url: "/section",
-        styles: [ "section.css" ],
-        scripts: [ "section.js" ]
-    }
-];
-
-var extras = {
-    menu: []
-};
-
-var ImportMiddleware = require('./../index')({
-    globalStylesheets: globalStylesheets,
-    globalScripts: globalScripts,
-    sections: sectionDefinition,
-    pages: pageDefinition,
-    extras: extras
+var mw = ImportMiddleware({
+    globalStylesheets: config.globalStylesheets,
+    globalScripts: config.globalScripts,
+    sections: config.sectionDefinition,
+    pages: config.pageDefinition,
+    extras: config.extras
 });
 
-console.log(ImportMiddleware.getImportsForPage("/"));
+describe('global stylesheets', function() {
+
+  it('should finish this test', function(done) {
+    done();
+  });
+
+});

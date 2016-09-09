@@ -1,21 +1,34 @@
 {
   "name": "express-includes",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Express middleware for easily including stylesheets and javascript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec",
+    "coverage": "istanbul cover node_modules/.bin/_mocha -- -R spec"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   },
   "keywords": [
     "express",
     "node",
     "includes",
-    "imports"
+    "imports",
+    "stylesheets",
+    "javascript",
+    "link",
+    "script"
   ],
   "author": "Nathan Francy",
   "license": "MIT",
   "repository": "https://github.com/nathanfrancy/express-includes",
   "devDependencies": {
-    "express": "^4.13.4"
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.12",
+    "express": "^4.13.4",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2"
   }
 }

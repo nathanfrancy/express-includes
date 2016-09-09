@@ -29,5 +29,4 @@ build/Release
 node_modules
 
 *.iml
-.idea/**
-!.idea/runConfigurations
+.idea
