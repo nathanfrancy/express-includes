@@ -124,6 +124,47 @@ describe('getSectionConfig', function() {
 
 });
 
+describe('getPageConfig', function() {
+
+  it('returns null if null url', function() {
+    var pageConfig = _imports.getPageConfig(null);
+    expect(pageConfig).to.equal(null);
+  });
+
+  it('returns null if null url', function() {
+    var pageConfig = _imports.getPageConfig(undefined);
+    expect(pageConfig).to.equal(null);
+  });
+
+  it('should return null if passed non-matched url', function() {
+    var pageConfig = _imports.getPageConfig('/thing-that-does-not-match');
+    expect(pageConfig).to.equal(null);
+  });
+
+  describe('valid page matches', function() {
+
+    it('should work with url that matches exactly', function() {
+      var pageConfig = _imports.getPageConfig('/about/team');
+      expect(pageConfig).to.not.equal(null);
+      expect(pageConfig.styles.indexOf('team.css')).to.not.equal(-1);
+      expect(pageConfig.scripts.indexOf('team.js')).to.not.equal(-1);
+      // Wouldnt expect team-member to be in just the team page.
+      expect(pageConfig.scripts.indexOf('team-member.js')).to.equal(-1);
+      // Wouldn't expect css to be in the scripts array.
+      expect(pageConfig.scripts.indexOf('team.css')).to.equal(-1);
+    });
+
+    it('should work with url path parameter', function() {
+      var pageConfig = _imports.getPageConfig('/about/team/nathan');
+      expect(pageConfig).to.not.equal(null);
+      expect(pageConfig.styles.indexOf('team-member.css')).to.not.equal(-1);
+      expect(pageConfig.scripts.indexOf('team-member.js')).to.not.equal(-1);
+    });
+
+  });
+
+});
+
 describe('mwFn', function() {
 
   it('should always call next', function(done) {
