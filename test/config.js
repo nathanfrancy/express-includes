@@ -1,33 +1,51 @@
-module.exports.globalStylesheets = [
-    "style.css"
+module.exports.globalStyles = [
+    "style.css",
+    "responsive.css"
 ];
 
 module.exports.globalScripts = [
-    "script.js"
+    "script.js",
+    "jquery.js"
 ];
 
 module.exports.pageDefinition = [
     {
         url: "/",
-        styles: [ "page.css" ],
-        scripts: [ "script.js" ],
-        extras: {
-            stuff: "yep"
-        }
+        styles: [
+          "home.css"
+        ],
+        scripts: [
+          "home.js"
+        ]
     },
     {
-        url: "/section/page",
-        styles: [ "param.css" ],
-        scripts: [ "param.js" ]
+        url: "/about/team",
+        styles: [
+          "team.css"
+        ],
+        scripts: [
+          "team.js"
+        ]
+    },
+    {
+      url: "/about/team/:",
+      styles: [
+        "team-member.css"
+      ],
+      scripts: [
+        "team-member.js"
+      ]
     }
 ];
 
 module.exports.sectionDefinition = [
     {
-        url: "/section",
-        styles: [ "section.css" ],
-        scripts: [ "section.js" ]
+        url: "/about",
+        styles: [
+          "about.css"
+        ],
+        scripts: [
+          "about.js"
+        ]
     }
 ];
-
-module.exports.extras = {};
