@@ -1,6 +1,6 @@
 {
   "name": "express-includes",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Express middleware for easily including stylesheets and javascript",
   "main": "lib/index.js",
   "scripts": {
