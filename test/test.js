@@ -326,5 +326,21 @@ describe('minified files', function() {
   it('generates minified js sources', function() {
     expect(minImports.scriptFiles['scripts/script.js'].min).to.equal('var x=0;x++,console.log(x);');
   });
+
+  describe('mwFnMinified', function() {
+
+    it('should return a giant list of minified css', function(done) {
+      var req = { url: '/about' };
+      var res = { locals: {} };
+
+      minImports.mwFnMinified(req, res,
+        function() {
+          expect(res.locals.cssSourceMin).to.equal('body{background-color:#00f}@media all and (max-device-width:800px){body{background-color:red}}');
+          expect(res.locals.jsSourceMin).to.equal('function jQuery(){console.log("jQuery is fucking awesome."),this.ajax=function(){throw new Error("404 error lol")}}var $=jQuery;var x=0;x++,console.log(x);');
+          done();
+        });
+    });
+
+  });
   
 });
