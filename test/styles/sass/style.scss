@@ -1,0 +1,9 @@
+$color : #111111;
+
+div.thing {
+    color: $color;
+
+    span {
+        display: inline-block;
+    }
+}

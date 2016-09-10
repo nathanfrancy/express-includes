@@ -344,3 +344,27 @@ describe('minified files', function() {
   });
   
 });
+
+describe('scss', function() {
+
+  var sassImports = new IncludeMiddleware({
+    minified: true,
+    dirName: __dirname,
+    globalStyles: [ 
+      'styles/sass/style.scss',
+      'styles/sass/responsive.scss'
+    ]
+  });
+
+  it('should compile scss', function(done) {
+    var req = { url: '/' };
+      var res = { locals: {} };
+
+      sassImports.mwFnMinified(req, res,
+        function() {
+          expect(res.locals.cssSourceMin).to.equal('div.thing{color:#111}div.thing span{display:inline-block}@media all and (min-width:320px){body{background-color:#111;color:#fff}}');
+          done();
+        });
+  });
+
+});
