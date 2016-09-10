@@ -1,6 +1,6 @@
 {
   "name": "express-includes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Express middleware for easily including stylesheets and javascript",
   "main": "lib/index.js",
   "scripts": {
@@ -32,6 +32,8 @@
     "mocha": "^3.0.2"
   },
   "dependencies": {
+    "clean-css": "^3.4.19",
+    "uglify-js": "^2.7.3",
     "url": "^0.11.0"
   }
 }

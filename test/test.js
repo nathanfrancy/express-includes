@@ -4,9 +4,9 @@ var chai = require('chai')
     assert = chai.assert;
 
 var config = require('./config');
-var ImportMiddleware = require('./../lib/index');
+var IncludeMiddleware = require('./../lib/index');
 
-var _imports = new ImportMiddleware({
+var _imports = new IncludeMiddleware({
     globalStyles: config.globalStyles,
     globalScripts: config.globalScripts,
     sectionDefinition: config.sectionDefinition,
@@ -217,7 +217,7 @@ describe('mwFn', function() {
 describe('invalid data', function() {
 
   it('should return null configs and empty scripts and styles array', function() {
-    var _includesEmpty = new ImportMiddleware();
+    var _includesEmpty = new IncludeMiddleware();
     var i = _includesEmpty.getImports('/test-page');
 
     expect(i).to.not.equal(null);
@@ -231,7 +231,7 @@ describe('invalid data', function() {
   });
 
   it('should not return styles if not an array', function() {
-    var _includes = new ImportMiddleware({
+    var _includes = new IncludeMiddleware({
       pageDefinition: [
         {
           url: '/about/team',
@@ -253,4 +253,78 @@ describe('invalid data', function() {
     expect(i.styles.length).to.equal(0);
   });
 
+});
+
+describe('minified files', function() {
+
+  var minImports = new IncludeMiddleware({
+    minified: true,
+    dirName: __dirname,
+    globalStyles: [ 
+      'styles/style.css',
+      'styles/responsive.css'
+    ],
+    globalScripts: [
+      'scripts/jquery.js',
+      'scripts/script.js'
+    ],
+    sectionDefinition: [
+      {
+        url: '/about/team',
+        styles: [
+          "styles/about.css"
+        ],
+        scripts: [
+          "scripts/about.js"
+        ]
+      }
+    ],
+    pageDefinition: [
+      {
+        url: "/",
+        styles: [
+          "styles/home.css"
+        ],
+        scripts: [
+          "scripts/home.js"
+        ]
+      },
+      {
+        url: "/about/team",
+        styles: [
+          "styles/team.css"
+        ],
+        scripts: [
+          "scripts/team.js"
+        ]
+      },
+      {
+        url: "/about/team/:",
+        styles: [
+          "styles/team-member.css"
+        ],
+        scripts: [
+          "scripts/team-member.js"
+        ]
+      }
+    ]
+  });
+
+  it('creates styleFiles object with full and minified sources', function() {
+    expect(minImports.styleFiles['styles/about.css']).to.not.equal(undefined);
+    expect(minImports.styleFiles['styles/home.css']).to.not.equal(undefined);
+    expect(minImports.styleFiles['styles/responsive.css']).to.not.equal(undefined);
+    expect(minImports.styleFiles['styles/style.css']).to.not.equal(undefined);
+    expect(minImports.styleFiles['styles/team.css']).to.not.equal(undefined);
+    expect(minImports.styleFiles['styles/team-member.css']).to.not.equal(undefined);
+  });
+
+  it('generates minified css sources', function() {
+    expect(minImports.styleFiles['styles/about.css'].min).to.equal('.about{width:100%;border:1px dotted #000}');
+  });
+
+  it('generates minified js sources', function() {
+    expect(minImports.scriptFiles['scripts/script.js'].min).to.equal('var x=0;x++,console.log(x);');
+  });
+  
 });

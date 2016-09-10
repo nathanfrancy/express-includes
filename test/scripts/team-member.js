@@ -1,0 +1,1 @@
+$('.team-member').enhance().enhance().enhance();
